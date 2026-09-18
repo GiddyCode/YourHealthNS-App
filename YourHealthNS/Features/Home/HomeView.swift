@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var model: ReportViewModel
     let openReport: () -> Void
 
     var body: some View {
@@ -26,17 +27,23 @@ struct HomeView: View {
                         .foregroundStyle(HealthTheme.primaryText)
                         .accessibilityAddTraits(.isHeader)
 
-                    ReportEmptyState()
-
-                    Button(action: openReport) {
-                        HStack(spacing: HealthTheme.Space.small) {
-                            Text("View report")
-                            Image(systemName: "chevron.right")
-                                .accessibilityHidden(true)
+                    ReportRefreshStatus(state: model.state)
+                    if case .loaded(.report(let report)) = model.state.content {
+                        ReportSummaryView(report: report)
+                        Button(action: openReport) {
+                            HStack(spacing: HealthTheme.Space.small) {
+                                Text("View report")
+                                Image(systemName: "chevron.right")
+                                    .accessibilityHidden(true)
+                            }
+                        }
+                        .buttonStyle(HealthPrimaryButtonStyle())
+                        .accessibilityIdentifier("home.viewReport")
+                    } else {
+                        ReportStatusView(content: model.state.content) {
+                            await model.load(refresh: true)
                         }
                     }
-                    .buttonStyle(HealthPrimaryButtonStyle())
-                    .accessibilityIdentifier("home.viewReport")
                 }
                 .modifier(HealthSurface())
             }
@@ -45,21 +52,8 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
         }
         .background { HealthCanvas() }
+        .refreshable { await model.load(refresh: true) }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityIdentifier("home.content")
     }
-}
-
-#Preview("Home") {
-    HomeView(openReport: {})
-}
-
-#Preview("Home · dark") {
-    HomeView(openReport: {})
-        .preferredColorScheme(.dark)
-}
-
-#Preview("Home · accessibility text") {
-    HomeView(openReport: {})
-        .environment(\.dynamicTypeSize, .accessibility3)
 }
