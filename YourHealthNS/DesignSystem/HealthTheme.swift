@@ -1,7 +1,6 @@
 import SwiftUI
 
 enum HealthTheme {
-    // Brand samples are decorative; readable text and actions use semantic colors.
     static let brandBlue = Color("BrandBlue")
     static let brandCyan = Color("BrandCyan")
     static let brandGreen = Color("BrandGreen")

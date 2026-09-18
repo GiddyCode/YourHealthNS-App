@@ -5,6 +5,11 @@ build/
 DerivedData/
 *.xcuserstate
 xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.xcuserdatad/
+SourcePackages/
+.swiftpm/
 *.xcresult/
 *.ipa
 *.dSYM/

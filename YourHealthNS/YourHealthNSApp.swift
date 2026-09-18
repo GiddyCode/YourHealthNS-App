@@ -1,9 +1,5 @@
-//
-//  YourHealthNSApp.swift
 //  YourHealthNS
-//
-//  Created by Gideon Ogbonna on 2026-09-18.
-//
+//  Created by Gideon Ogbonna.
 
 import SwiftUI
 
