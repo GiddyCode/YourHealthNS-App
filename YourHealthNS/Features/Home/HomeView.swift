@@ -9,6 +9,7 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: HealthTheme.Space.section) {
                 VStack(alignment: .leading, spacing: HealthTheme.Space.large) {
                     BrandWordmark()
+                        .frame(maxWidth: .infinity, alignment: .center)
 
                     VStack(alignment: .leading, spacing: HealthTheme.Space.small) {
                         Text("Your lab report")
