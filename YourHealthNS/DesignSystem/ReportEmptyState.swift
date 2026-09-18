@@ -12,10 +12,10 @@ struct ReportEmptyState: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: HealthTheme.Space.small) {
-                Text("No report loaded")
+                Text("No report available")
                     .font(.title3.weight(.semibold))
                     .foregroundStyle(HealthTheme.primaryText)
-                Text("There are no report results to display yet.")
+                Text("The laboratory service returned no report.")
                     .font(.body)
                     .foregroundStyle(HealthTheme.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)

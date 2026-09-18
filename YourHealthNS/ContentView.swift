@@ -4,11 +4,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        AppTabs()
-    }
-}
+    @StateObject private var model = ReportViewModel(
+        repository: LiveReportRepository(endpoint: "https://build.fhir.org/diagnosticreport-example.json")
+    )
 
-#Preview {
-    ContentView()
+    var body: some View {
+        AppTabs(model: model)
+            .task { await model.load() }
+    }
 }

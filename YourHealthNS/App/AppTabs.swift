@@ -6,12 +6,13 @@ enum AppTab: Hashable {
 }
 
 struct AppTabs: View {
+    @ObservedObject var model: ReportViewModel
     @State private var selection: AppTab = .home
 
     var body: some View {
         TabView(selection: $selection) {
             NavigationStack {
-                HomeView {
+                HomeView(model: model) {
                     selection = .report
                 }
             }
@@ -21,7 +22,7 @@ struct AppTabs: View {
             .tag(AppTab.home)
 
             NavigationStack {
-                ReportView()
+                ReportView(model: model)
             }
             .tabItem {
                 Label("Report", systemImage: "doc.text.fill")
@@ -30,8 +31,4 @@ struct AppTabs: View {
         }
         .tint(HealthTheme.action)
     }
-}
-
-#Preview("App tabs") {
-    AppTabs()
 }
