@@ -22,7 +22,9 @@ struct AppTabs: View {
             .tag(AppTab.home)
 
             NavigationStack {
-                ReportView(model: model)
+                ReportView(model: model) {
+                    selection = .home
+                }
             }
             .tabItem {
                 Label("Report", systemImage: "doc.text.fill")
