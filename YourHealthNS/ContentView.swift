@@ -4,6 +4,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var showingSplash = true
     @StateObject private var model = ReportViewModel(
@@ -13,12 +14,21 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             AppTabs(model: model)
-                .allowsHitTesting(!showingSplash)
-                .accessibilityHidden(showingSplash)
+                .allowsHitTesting(!showingSplash && scenePhase == .active)
+                .accessibilityHidden(showingSplash || scenePhase != .active)
 
             if showingSplash {
                 SplashView()
                     .transition(.opacity)
+                    .accessibilityHidden(scenePhase != .active)
+            }
+
+            if scenePhase != .active {
+                // Cover content before the scene enters the background.
+                PrivacyCoverView()
+                    .transition(.identity)
+                    .transaction { $0.animation = nil }
+                    .zIndex(1)
             }
         }
         .task { await model.load() }
