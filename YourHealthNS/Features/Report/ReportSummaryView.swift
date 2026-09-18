@@ -1,10 +1,16 @@
 import SwiftUI
 
 struct ReportSummaryView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let report: LabReport
+    var horizontal = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: HealthTheme.Space.regular) {
+        let layout = horizontal && !dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(HStackLayout(alignment: .top, spacing: HealthTheme.Space.regular))
+            : AnyLayout(VStackLayout(alignment: .leading, spacing: HealthTheme.Space.regular))
+
+        layout {
             Image("Microscope")
                 .resizable()
                 .scaledToFit()
@@ -13,23 +19,43 @@ struct ReportSummaryView: View {
                 .clipShape(RoundedRectangle(cornerRadius: HealthTheme.Radius.illustration))
                 .accessibilityHidden(true)
 
-            Text(report.name)
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(HealthTheme.primaryText)
-                .accessibilityAddTraits(.isHeader)
-            Text(ReportFormatting.status(report.status))
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(HealthTheme.primaryText)
-                .padding(.horizontal, HealthTheme.Space.medium)
-                .padding(.vertical, HealthTheme.Space.small)
-                .background(HealthTheme.border, in: Capsule())
+            VStack(alignment: .leading, spacing: HealthTheme.Space.small) {
+                Text(report.name)
+                    .font(horizontal ? .headline : .title3.weight(.semibold))
+                    .foregroundStyle(HealthTheme.primaryText)
+                    .accessibilityAddTraits(.isHeader)
+                ReportBadge(text: ReportFormatting.status(report.status), tint: report.status == .final ? .green : HealthTheme.action)
 
-            Label(report.performers.isEmpty ? "Performer unavailable" : report.performers.joined(separator: ", "), systemImage: "building.2")
-            Label(ReportFormatting.effective(report.effective), systemImage: "calendar")
+                Label(report.performers.isEmpty ? "Performer unavailable" : report.performers.joined(separator: ", "), systemImage: "building.2")
+                Label(ReportFormatting.effective(report.effective), systemImage: "calendar")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .font(.subheadline)
         .foregroundStyle(HealthTheme.secondaryText)
         .fixedSize(horizontal: false, vertical: true)
+    }
+}
+
+struct ReportBadge: View {
+    @Environment(\.colorScheme) private var colorScheme
+    let text: String
+    let tint: Color
+
+    var body: some View {
+        Text(text)
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(tint)
+            .padding(.horizontal, HealthTheme.Space.medium)
+            .padding(.vertical, HealthTheme.Space.small)
+            .background(tint.opacity(0.16), in: RoundedRectangle(cornerRadius: HealthTheme.Radius.control))
+            .background {
+                if tint == .black && colorScheme == .dark {
+                    RoundedRectangle(cornerRadius: HealthTheme.Radius.control)
+                        .fill(.white.opacity(0.85))
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 
