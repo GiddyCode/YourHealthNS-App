@@ -6,6 +6,11 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B10000000000000000000001 /* ModelsR4 in Frameworks */ = {isa = PBXBuildFile; productRef = B10000000000000000000002 /* ModelsR4 */; };
+		B10000000000000000000003 /* FMCore in Frameworks */ = {isa = PBXBuildFile; productRef = B10000000000000000000004 /* FMCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A10000000000000000000001 /* YourHealthNS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourHealthNS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -22,6 +27,8 @@
 		A10000000000000000000003 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				B10000000000000000000001 /* ModelsR4 in Frameworks */,
+				B10000000000000000000003 /* FMCore in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -60,6 +67,10 @@
 				A10000000000000000000002 /* YourHealthNS */,
 			);
 			name = YourHealthNS;
+			packageProductDependencies = (
+				B10000000000000000000002 /* ModelsR4 */,
+				B10000000000000000000004 /* FMCore */,
+			);
 			productName = YourHealthNS;
 			productReference = A10000000000000000000001 /* YourHealthNS.app */;
 			productType = "com.apple.product-type.application";
@@ -88,6 +99,9 @@
 			);
 			mainGroup = A10000000000000000000004;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B10000000000000000000010 /* XCRemoteSwiftPackageReference "FHIRModels" */,
+			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = A10000000000000000000005 /* Products */;
 			projectDirPath = "";
@@ -258,7 +272,6 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -290,7 +303,6 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -318,6 +330,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B10000000000000000000010 /* XCRemoteSwiftPackageReference "FHIRModels" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/FHIRModels.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B10000000000000000000002 /* ModelsR4 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B10000000000000000000010 /* XCRemoteSwiftPackageReference "FHIRModels" */;
+			productName = ModelsR4;
+		};
+		B10000000000000000000004 /* FMCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B10000000000000000000010 /* XCRemoteSwiftPackageReference "FHIRModels" */;
+			productName = FMCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1000000000000000000000A /* Project object */;
 }

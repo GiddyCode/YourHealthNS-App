@@ -15,7 +15,6 @@ struct HealthCanvas: View {
                         .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
                         .clipped()
                 } else {
-                    // A portrait bitmap would crop its waves excessively on wide layouts.
                     DecorativeWaves()
                         .frame(height: min(geometry.size.height * 0.24, 220))
                 }
