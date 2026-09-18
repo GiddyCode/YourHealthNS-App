@@ -8,11 +8,7 @@ struct ReportStatusView: View {
         VStack(alignment: .leading, spacing: HealthTheme.Space.regular) {
             switch content {
             case .idle, .loading:
-                ProgressView("Retrieving your report")
-                    .tint(HealthTheme.action)
-                Text("Connecting securely to the laboratory service…")
-                    .font(.subheadline)
-                    .foregroundStyle(HealthTheme.secondaryText)
+                ReportLoadingView()
             case .failed(let message):
                 Label("We couldn't load the report", systemImage: "wifi.exclamationmark")
                     .font(.headline)
