@@ -12,12 +12,12 @@ YourHealthNS is a SwiftUI app for viewing a laboratory report. It fetches the re
 - Privacy cover when the app becomes inactive.
 - Dynamic Type support, VoiceOver labels, and layouts for iPhone and iPad.
 
-## App Preview
+## App preview
 https://github.com/user-attachments/assets/1c3e60ba-d632-401a-a3ca-328156ed7d21
 
 https://github.com/user-attachments/assets/4a7cc22c-2dad-465a-be3b-1ec9acaaadd9
 
-Additional videos/screenshots of loading animation, privacy, error states, and accessibility captures are in the [**[App Screenshots and Videos]**](docs/MEDIA.md). 
+Additional videos and screenshots of loading, privacy, error states, and responsive layouts are in [App screenshots and videos](docs/MEDIA.md).
 
 ## Requirements
 
@@ -88,7 +88,7 @@ YourHealthNSTests/
 docs/
 ```
 
- The [**[Architecture Document]**](docs/ARCHITECTURE.md) includes the dependency diagram, request flow, and state transitions.
+The [architecture document](docs/ARCHITECTURE.md) includes the dependency diagram, request flow, and state transitions.
 
 ## API and FHIR parsing
 
@@ -130,7 +130,7 @@ To run the tests, select the **YourHealthNS** scheme and an iOS simulator, then 
 
 Tests use a captured fixture, synthetic payloads, repository doubles, and stubbed HTTP responses. Their assertions do not depend on the live endpoint. The target is application-hosted, so app startup may still make its own report request.
 
-The recorded validation used Xcode 27.0 with an iPhone 18 Pro destination. Manual checks also cover navigation, refresh and retry, the privacy cover, iPhone/iPad layouts, large text, and VoiceOver. Full results are in [**[Testing and Validation]**](docs/VALIDATION.md).
+The recorded validation used Xcode 27.0 with an iPhone 18 Pro simulator running iOS 27.0. Manual checks also cover navigation, refresh and retry, the privacy cover, iPhone/iPad layouts, large text, and VoiceOver. Full results are in [testing and validation](docs/VALIDATION.md).
 
 ## Privacy and accessibility
 

@@ -6,10 +6,10 @@ The 20-test suite passed with zero failures, confirmed by the Xcode Test navigat
 
 | Item | Result |
 | --- | --- |
-| Revision tested | ✅ |
-| Xcode version and build | Version 27.0 |
-| Device / simulator and OS | iPhone 18 Pro |
-| Build result | Succeded |
+| Revision tested | `6f7943a` |
+| Xcode version and build | Xcode 27.0 (`27A266a`) |
+| Device / simulator and OS | iPhone 18 Pro simulator, iOS 27.0 |
+| Build result | Succeeded |
 | XCTest result / failures | 20 passed, 0 failures |
 | Manual UI review | ✅ |
 | Accessibility review | ✅ |
@@ -60,7 +60,6 @@ Synthetic unit-test payloads cover edge outcomes the live endpoint may not expos
 - [x] iPad and landscape layout.
 - [x] Large accessibility text sizes without clipped values or actions.
 - [x] VoiceOver reading order, action labels, loading state, and result context.
-
 
 
 
