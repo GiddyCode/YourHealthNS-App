@@ -62,18 +62,6 @@ Synthetic unit-test payloads cover edge outcomes the live endpoint may not expos
 - [x] VoiceOver reading order, action labels, loading state, and result context.
 
 
-## Final submission
-
-- [x] Automated test results recorded: 20 passed, 0 failures.
-- [x] Build result and exact test environment recorded.
-- [x] README setup
-- [x] Required current stable Xcode version checked at submission time.
-- [x] Source, assets, storyboard, Xcode project, shared scheme, and package lockfile included.
-- [x] Test sources and captured fixture included.
-- [x] Screenshots and video links provided.
-- [x] Repository access or source archive provided to the intended reviewer.
-
-
 
 
 
