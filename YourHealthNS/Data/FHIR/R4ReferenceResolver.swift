@@ -3,7 +3,7 @@ import ModelsR4
 
 struct R4ReferenceResolver {
     enum Resolution {
-        case found(R4ReportBundle.Resource, fullURL: String?)
+        case found(R4ReportBundle.Resource, fullURL: String?, isContained: Bool)
         case unavailable(ResultUnavailableReason)
     }
 
@@ -24,7 +24,7 @@ struct R4ReferenceResolver {
             guard matches.count == 1, let match = matches.first else {
                 return .unavailable(matches.isEmpty ? .unresolvedReference : .ambiguousReference)
             }
-            return .found(match, fullURL: reportFullURL)
+            return .found(match, fullURL: reportFullURL, isContained: true)
         }
 
         let canonical = Self.canonical(reference, relativeTo: reportFullURL)
@@ -38,7 +38,26 @@ struct R4ReferenceResolver {
         guard matches.count == 1, let entry = matches.first, let resource = entry.resource else {
             return .unavailable(matches.count > 1 ? .ambiguousReference : .unresolvedReference)
         }
-        return .found(resource, fullURL: entry.fullUrl)
+        return .found(resource, fullURL: entry.fullUrl, isContained: false)
+    }
+
+    func subjectsMatch(
+        _ reportSubject: String,
+        _ observationSubject: String,
+        observationURL: String?,
+        observationIsContained: Bool
+    ) -> Bool {
+        if reportSubject.hasPrefix("#") || observationSubject.hasPrefix("#") {
+            // A fragment such as #patient is local to its containing resource.
+            // Identical fragments in separate bundle entries can refer to different patients.
+            // Only observations contained in this report share its fragment scope.
+            guard observationIsContained, reportSubject == observationSubject else { return false }
+            let id = String(reportSubject.dropFirst())
+            guard !id.isEmpty else { return false }
+            return contained.filter { $0.get().id?.value?.string == id }.count == 1
+        }
+        return Self.canonical(reportSubject, relativeTo: reportFullURL)
+            == Self.canonical(observationSubject, relativeTo: observationURL)
     }
 
     static func canonical(_ reference: String, relativeTo fullURL: String?) -> String {

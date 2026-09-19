@@ -25,14 +25,17 @@ struct R4ReportMapper {
             switch resolver.resolve(reference.reference?.value?.string) {
             case .unavailable(let reason):
                 return unavailable(index, reason: reason)
-            case .found(let resource, let observationURL):
+            case .found(let resource, let observationURL, let isContained):
                 guard case .observation(let observation) = resource else {
                     return unavailable(index, reason: .wrongResourceType)
                 }
                 if let reportSubject = report.subject?.reference?.value?.string,
                    let observationSubject = observation.subject?.reference?.value?.string,
-                   R4ReferenceResolver.canonical(reportSubject, relativeTo: fullURL)
-                    != R4ReferenceResolver.canonical(observationSubject, relativeTo: observationURL) {
+                   !resolver.subjectsMatch(
+                    reportSubject, observationSubject,
+                    observationURL: observationURL,
+                    observationIsContained: isContained && observation.contained?.isEmpty != false
+                   ) {
                     return unavailable(index, reason: .conflictingSubject)
                 }
                 return map(observation, index: index)
@@ -84,7 +87,7 @@ struct R4ReportMapper {
 
     private func performer(_ reference: Reference, resolver: R4ReferenceResolver) -> String? {
         if let display = nonempty(reference.display?.value?.string) { return display }
-        if case .found(.organization(let organization), _) = resolver.resolve(reference.reference?.value?.string),
+        if case .found(.organization(let organization), _, _) = resolver.resolve(reference.reference?.value?.string),
            organization.modifierExtension?.isEmpty != false, organization.implicitRules == nil {
             return nonempty(organization.name?.value?.string)
         }
