@@ -1,63 +1,41 @@
-# Screenshots and videos
-
-Place images in `docs/media/` and replace placeholders with Markdown such as `![Home screen](media/home.png)`. Videos can use relative file links or reviewer-accessible hosted URLs.
+# App Screenshots and videos
 
 ## Walkthrough video
 
-> **INSERT VIDEO FILE LINK OR HOSTED URL HERE**
->
-> Suggested sequence: launch, Home summary, View report, scroll, refresh, back to Home.
+<video src="docs/media/App%20Demo%20on%20iPhone.mp4" controls max-width="600"></video>
 
-Device / OS: __________  
-Duration: __________  
-Recording conditions: __________
+Device / OS: iPhone 18 Pro   
+Recording conditions: iOS Simulator
 
 ## Home
-
-> **INSERT HOME SCREENSHOT HERE**
->
-> Caption: Latest report with name, status, performer, clinical date, and View report action.
+![Home View](docs/media/Home%20View%20Screenshot.png)
+Latest report with name, status, performer, clinical date, and View report action.
 
 ## Report
-
-> **INSERT REPORT SCREENSHOT HERE**
->
-> Caption: Ordered results with source values, units, reference ranges, and interpretation chips.
+![Report View](docs/media/Report%20View%20Screenshot.png)
+Ordered results with source values, units, reference ranges, and interpretation chips.
 
 ## Loading
-
-> **INSERT LOADING SCREENSHOT OR SHORT CLIP HERE**
->
-> Caption: Report retrieval while the request is pending.
-
-A fast request may finish before loading is visible. Identify network throttling in the caption if used.
+![Loading Screen](docs/media/Loading%20Screen%20Screenshot.png)
+Report retrieval while the request is pending.
 
 ## Failure and retry
+![No Internet - Home View](docs/media/No%20Internet%20-%20Home%20View%20Screenshot.png)
+![No Internet - Report View](docs/media/No%20Internet%20-%20Report%20View%20Screenshot.png)
 
-> **INSERT ERROR / RETRY SCREENSHOT HERE**
->
-> Caption: Initial request failure and retry action.
-
-> **INSERT FAILED REFRESH SCREENSHOT HERE**
->
-> Caption: Existing results remain visible after a failed refresh.
+Initial request failure and retry action.
 
 ## Privacy cover
+![User Privacy](docs/media/User%20Privacy%20Screenshot.png)
+User confidential content covered while the scene is inactive.
 
-> **INSERT INACTIVE-SCENE / APP-SWITCHER SCREENSHOT HERE**
->
-> Caption: Report content covered while the scene is inactive.
 
-## Accessibility
+## Responsiveness and iPad layouts.
+<video src="docs/media/App%20Demo%20on%20iPad.mp4" controls max-width="600"></video>
+![iPad Home View](docs/media/iPad%20Home%20View%20Screenshot.png)
+![iPad Report View](docs/media/iPad%20Report%20View%20Screenshot.png)
 
-> **INSERT LARGE-TEXT OR DARK-APPEARANCE SCREENSHOT HERE — OPTIONAL**
->
-> Caption: Record text-size and appearance settings used.
-
-## Responsiveness and iPhone layouts.
-> **INSERT - Small and large iPhone layouts, iPad and landscape layout.**
->
-> Caption: Covers iphone and ipad layouts.
+Covers ipad layouts.
 
 
 
