@@ -10,14 +10,15 @@ struct ReportLoadingView: View {
                     .frame(maxWidth: .infinity)
             }
 
-            VStack(alignment: .leading, spacing: HealthTheme.Space.small) {
-                ProgressView("Retrieving your report")
+            VStack(alignment: .center, spacing: HealthTheme.Space.small) {
+                Text("Retrieving your report")
                     .font(.headline)
-                    .tint(HealthTheme.action)
                 Text("Connecting securely to the laboratory service…")
                     .font(.subheadline)
                     .foregroundStyle(HealthTheme.secondaryText)
+                    .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity, alignment: .center)
 
             if showDetails {
                 VStack(alignment: .leading, spacing: HealthTheme.Space.regular) {
