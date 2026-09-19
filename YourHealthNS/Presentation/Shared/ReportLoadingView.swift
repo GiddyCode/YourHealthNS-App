@@ -6,12 +6,8 @@ struct ReportLoadingView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: HealthTheme.Space.large) {
             if showDetails {
-                Image("Microscope")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: HealthTheme.microscopeSize, height: HealthTheme.microscopeSize)
-                    .background(.white, in: RoundedRectangle(cornerRadius: HealthTheme.Radius.illustration))
-                    .clipShape(RoundedRectangle(cornerRadius: HealthTheme.Radius.illustration))
+                MicroscopeLoadingMark()
+                    .frame(maxWidth: .infinity)
             }
 
             VStack(alignment: .leading, spacing: HealthTheme.Space.small) {
