@@ -46,6 +46,14 @@ There are no API keys or additional services to configure. The project uses Swif
 
 If package resolution fails, check your connection and use **File → Packages → Resolve Package Versions**. If no simulator is available, install a compatible runtime in Xcode.
 
+## Relevant Assumptions
+
+- The assessment endpoint is publicly accessible and does not require authentication.
+The assessment scope is a read-only view of the supplied report, so patient selection, report history, editing, and local persistence are outside the app's scope.
+- The response is a FHIR R4 Bundle containing no more than one DiagnosticReport. 
+- Observation and performer references are resolved from resources included in the response; the app does not request missing linked resources separately.
+- Values, units, reference ranges, and interpretations from the source are treated as authoritative. The app does not calculate clinical interpretations or convert units.
+
 ## Architecture
 
 I used **MVVM** with a **Clean Architecture** folder structure to separate the UI, report models, and data handling.
