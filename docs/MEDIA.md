@@ -2,11 +2,7 @@
 
 ## Walkthrough video
 
-<a href="./media/App%20Demo%20on%20iPhone.mp4?raw=1">
-  <img src="./media/Home%20View%20Screenshot.png" alt="Watch the iPhone walkthrough" width="350">
-</a>
-
-[▶ Watch the iPhone walkthrough](./media/App%20Demo%20on%20iPhone.mp4?raw=1)
+https://github.com/user-attachments/assets/1c3e60ba-d632-401a-a3ca-328156ed7d21
 
 Device / OS: iPhone 18 Pro   
 Recording conditions: iOS Simulator
@@ -39,11 +35,7 @@ User confidential content covered while the scene is inactive.
 
 
 ## Responsiveness and iPad layouts.
-<a href="./media/App%20Demo%20on%20iPad.mp4?raw=1">
-  <img src="./media/iPad%20Home%20View%20Screenshot.png" alt="Watch the iPad walkthrough" width="350">
-</a>
-
-[▶ Watch the iPad walkthrough](./media/App%20Demo%20on%20iPad.mp4?raw=1)
+https://github.com/user-attachments/assets/4a7cc22c-2dad-465a-be3b-1ec9acaaadd9
 
 <img src="media/iPad%20Home%20View%20Screenshot.png" alt="iPad Home View" max-width="500" width="350">
 <img src="media/iPad%20Report%20View%20Screenshot.png" alt="iPad Report View" max-width="500" width="350">
