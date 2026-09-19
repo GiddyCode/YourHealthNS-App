@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.locale) private var locale
     @ObservedObject var model: ReportViewModel
     let openReport: () -> Void
 
@@ -28,9 +29,9 @@ struct HomeView: View {
                         .foregroundStyle(HealthTheme.primaryText)
                         .accessibilityAddTraits(.isHeader)
 
-                    ReportRefreshStatus(state: model.state)
-                    if case .loaded(.report(let report)) = model.state.content {
-                        ReportSummaryView(report: report)
+                    ReportRefreshStatus(status: model.state.refresh, formatter: formatter)
+                    if let report = model.state.report {
+                        ReportSummaryView(report: report, formatter: formatter)
                         Button(action: openReport) {
                             HStack(spacing: HealthTheme.Space.small) {
                                 Text("View report")
@@ -41,7 +42,7 @@ struct HomeView: View {
                         .buttonStyle(HealthPrimaryButtonStyle())
                         .accessibilityIdentifier("home.viewReport")
                     } else {
-                        ReportStatusView(content: model.state.content) {
+                        ReportStatusView(state: model.state, formatter: formatter) {
                             await model.load(refresh: true)
                         }
                     }
@@ -56,5 +57,9 @@ struct HomeView: View {
         .refreshable { await model.load(refresh: true) }
         .toolbar(.hidden, for: .navigationBar)
         .accessibilityIdentifier("home.content")
+    }
+
+    private var formatter: ReportFormatting {
+        ReportFormatting(locale: locale)
     }
 }

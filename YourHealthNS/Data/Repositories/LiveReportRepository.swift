@@ -12,6 +12,25 @@ actor LiveReportRepository: ReportRepository {
     }
 
     func fetchReport() async throws -> ReportOutcome {
+        do {
+            return try await requestReport()
+        } catch {
+            if Task.isCancelled || error is CancellationError || (error as? URLError)?.code == .cancelled {
+                throw CancellationError()
+            }
+            if error is ReportDataError { throw ReportFailure.invalidReport }
+            if let error = error as? URLError {
+                switch error.code {
+                case .notConnectedToInternet: throw ReportFailure.offline
+                case .timedOut: throw ReportFailure.timedOut
+                default: throw ReportFailure.serviceUnavailable
+                }
+            }
+            throw ReportFailure.serviceUnavailable
+        }
+    }
+
+    private func requestReport() async throws -> ReportOutcome {
         guard let url = URL(string: endpoint), url.scheme == "https" else {
             throw ReportRequestError.invalidResponse
         }

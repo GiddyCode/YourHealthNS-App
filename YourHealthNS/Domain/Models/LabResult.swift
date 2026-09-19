@@ -1,50 +1,13 @@
 import Foundation
 
-struct LabReport: Equatable, Sendable {
-    let name: String
-    let status: ClinicalStatus
-    let performers: [String]
-    let effective: ClinicalDate?
-    let issued: String?
-    let results: [LabResult]
-
-    var unavailableResultCount: Int {
-        results.filter { $0.value.isUnavailable }.count
-    }
-}
-
-enum ReportOutcome: Equatable, Sendable {
-    case noReport
-    case report(LabReport)
-}
-
-enum ClinicalStatus: String, Equatable, Sendable {
-    case registered, partial, preliminary, final, amended, corrected, appended
-    case cancelled, unknown
-    case enteredInError = "entered-in-error"
-
-    var permitsMeasurements: Bool {
-        switch self {
-        case .partial, .preliminary, .final, .amended, .corrected, .appended: true
-        case .registered, .cancelled, .enteredInError, .unknown: false
-        }
-    }
-}
-
-/// Retains the source date precision and UTC offset.
-enum ClinicalDate: Equatable, Sendable {
-    case dateTime(String)
-    case period(start: String?, end: String?)
-}
-
 struct LabResult: Identifiable, Equatable, Sendable {
     /// Position in DiagnosticReport.result, including unresolved references.
     let id: Int
-    let name: String
+    let name: String?
     let status: ClinicalStatus?
     let value: ClinicalValue
     let referenceRanges: [ClinicalReferenceRange]
-    let interpretations: [String]
+    let interpretations: [ResultInterpretation]
 }
 
 enum ClinicalValue: Equatable, Sendable {
@@ -94,15 +57,4 @@ enum ResultUnavailableReason: Equatable, Sendable {
     case unsupportedValue
     case groupedResult
     case inconsistentValue
-}
-
-protocol ReportRepository: Sendable {
-    func fetchReport() async throws -> ReportOutcome
-}
-
-enum ReportDataError: Error, Equatable, Sendable {
-    case invalidPayload
-    case unsupportedBundle
-    case multipleReports
-    case unsupportedReportModifier
 }

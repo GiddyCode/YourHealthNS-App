@@ -1,20 +1,66 @@
 import Foundation
 
-enum ReportFormatting {
-    static func status(_ status: ClinicalStatus) -> String {
+struct ReportFormatting {
+    let locale: Locale
+
+    func reportName(_ report: LabReport) -> String {
+        report.name ?? "Lab report"
+    }
+
+    func resultName(_ result: LabResult) -> String {
+        result.name ?? "Result \(result.id + 1)"
+    }
+
+    func performers(_ performers: [LabReport.Performer]) -> String {
+        guard !performers.isEmpty else { return "Performer unavailable" }
+        return performers.map { $0.name ?? "Performer unavailable" }.joined(separator: ", ")
+    }
+
+    func interpretation(_ interpretation: ResultInterpretation) -> String {
+        if let text = interpretation.text { return text }
+        if let display = interpretation.codings.compactMap(\.display).first { return display }
+        switch interpretation.kind {
+        case .normal: return "Normal"
+        case .high: return "High"
+        case .low: return "Low"
+        case .criticalHigh: return "Critical high"
+        case .criticalLow: return "Critical low"
+        case .abnormal: return "Abnormal"
+        case .unknown: return interpretation.codings.compactMap(\.code).first ?? "Interpretation unavailable"
+        }
+    }
+
+    func failure(_ failure: ReportFailure) -> String {
+        switch failure {
+        case .offline: "You're offline. Check your connection and try again."
+        case .timedOut: "The request timed out. Please try again."
+        case .invalidReport: "The report couldn't be read. Please try again later."
+        case .serviceUnavailable: "The laboratory service couldn't provide a report. Please try again."
+        }
+    }
+
+    func refreshMessage(_ refresh: ReportState.Refresh) -> String? {
+        switch refresh {
+        case .idle, .loading: nil
+        case .updated: "Report updated."
+        case .failed(let error): "Couldn't refresh. Showing the previous response. " + failure(error)
+        }
+    }
+
+    func status(_ status: ClinicalStatus) -> String {
         switch status {
         case .enteredInError: "Entered in error"
         default: status.rawValue.capitalized
         }
     }
 
-    static func quantity(_ quantity: ClinicalQuantity) -> String {
-        let value = NSDecimalNumber(decimal: quantity.value).stringValue
+    func quantity(_ quantity: ClinicalQuantity) -> String {
+        let value = NSDecimalNumber(decimal: quantity.value).description(withLocale: locale)
         return [quantity.comparator, value, quantity.unit ?? quantity.unitCode]
             .compactMap { $0 }.joined(separator: " ")
     }
 
-    static func value(_ value: ClinicalValue) -> String {
+    func value(_ value: ClinicalValue) -> String {
         switch value {
         case .quantity(let result): quantity(result)
         case .text(let text): text
@@ -34,7 +80,7 @@ enum ReportFormatting {
         }
     }
 
-    static func range(_ range: ClinicalReferenceRange) -> String {
+    func range(_ range: ClinicalReferenceRange) -> String {
         var parts: [String] = []
         switch (range.low, range.high) {
         case (let low?, let high?): parts.append("\(quantity(low)) – \(quantity(high))")
@@ -50,7 +96,7 @@ enum ReportFormatting {
         return parts.isEmpty ? "Not provided" : parts.joined(separator: " · ")
     }
 
-    static func effective(_ effective: ClinicalDate?) -> String {
+    func effective(_ effective: ClinicalDate?) -> String {
         switch effective {
         case .dateTime(let source): date(source)
         case .period(let start, let end): period(start: start, end: end)
@@ -58,11 +104,11 @@ enum ReportFormatting {
         }
     }
 
-    private static func period(start: String?, end: String?) -> String {
+    private func period(start: String?, end: String?) -> String {
         "Period: \(start.map(date) ?? "Start unavailable") – \(end.map(date) ?? "End unavailable")"
     }
 
-    private static func date(_ source: String) -> String {
+    private func date(_ source: String) -> String {
         guard source.contains("T") else { return source }
         let parser = ISO8601DateFormatter()
         parser.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -82,7 +128,7 @@ enum ReportFormatting {
             return source
         }
         let formatter = DateFormatter()
-        formatter.locale = .current
+        formatter.locale = locale
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.timeZone = zone
         formatter.dateStyle = .medium
