@@ -12,12 +12,12 @@ YourHealthNS is a SwiftUI app for viewing a laboratory report. It fetches the re
 - Privacy cover when the app becomes inactive.
 - Dynamic Type support, VoiceOver labels, and layouts for iPhone and iPad.
 
-## Screenshots and video
+## App Preview
 https://github.com/user-attachments/assets/1c3e60ba-d632-401a-a3ca-328156ed7d21
 
 https://github.com/user-attachments/assets/4a7cc22c-2dad-465a-be3b-1ec9acaaadd9
 
-Additional screenshots of loading animation, privacy, error states, and accessibility captures are in the [**[App Screenshots and Videos]**](docs/MEDIA.md). 
+Additional videos/screenshots of loading animation, privacy, error states, and accessibility captures are in the [**[App Screenshots and Videos]**](docs/MEDIA.md). 
 
 ## Requirements
 
