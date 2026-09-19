@@ -1,4 +1,4 @@
-# Validation and submission checklist
+# Validation
 
 ## Verification record
 
