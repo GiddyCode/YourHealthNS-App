@@ -49,7 +49,7 @@ If package resolution fails, check your connection and use **File â†’ Packages â
 ## Relevant Assumptions
 
 - The assessment endpoint is publicly accessible and does not require authentication.
-The assessment scope is a read-only view of the supplied report, so patient selection, report history, editing, and local persistence are outside the app's scope.
+- The assessment scope is a read-only view of the supplied report, so patient selection, report history, editing, and local persistence are outside the app's scope.
 - The response is a FHIR R4 Bundle containing no more than one DiagnosticReport. 
 - Observation and performer references are resolved from resources included in the response; the app does not request missing linked resources separately.
 - Values, units, reference ranges, and interpretations from the source are treated as authoritative. The app does not calculate clinical interpretations or convert units.

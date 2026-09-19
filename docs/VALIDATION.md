@@ -6,7 +6,7 @@ The 20-test suite passed with zero failures, confirmed by the Xcode Test navigat
 
 | Item | Result |
 | --- | --- |
-| Revision tested | `6f7943a` |
+| Revision tested | `5361185` |
 | Xcode version and build | Xcode 27.0 (`27A266a`) |
 | Device / simulator and OS | iPhone 18 Pro simulator, iOS 27.0 |
 | Build result | Succeeded |
