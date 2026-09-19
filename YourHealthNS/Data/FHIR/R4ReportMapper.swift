@@ -40,9 +40,9 @@ struct R4ReportMapper {
         }
 
         return .report(LabReport(
-            name: label(report.code) ?? "Lab report",
+            name: label(report.code),
             status: status,
-            performers: (report.performer ?? []).compactMap { performer($0, resolver: resolver) },
+            performers: (report.performer ?? []).map { LabReport.Performer(name: performer($0, resolver: resolver)) },
             effective: effective(report.effective),
             issued: report.issued?.value?.description,
             results: results
@@ -50,7 +50,7 @@ struct R4ReportMapper {
     }
 
     private func map(_ observation: Observation, index: Int) -> LabResult {
-        let name = label(observation.code) ?? "Unnamed test"
+        let name = label(observation.code)
         let status = ClinicalStatus(rawValue: observation.status.value?.rawValue ?? "unknown") ?? .unknown
         guard observation.modifierExtension?.isEmpty != false, observation.implicitRules == nil,
               !(observation.referenceRange ?? []).contains(where: { $0.modifierExtension?.isEmpty == false }) else {
@@ -70,7 +70,7 @@ struct R4ReportMapper {
             id: index, name: name, status: status,
             value: value(observation.value, absentReason: observation.dataAbsentReason),
             referenceRanges: (observation.referenceRange ?? []).map(referenceRange),
-            interpretations: (observation.interpretation ?? []).compactMap(interpretation)
+            interpretations: (observation.interpretation ?? []).map(interpretation)
         )
     }
 
@@ -78,7 +78,7 @@ struct R4ReportMapper {
         _ index: Int, name: String? = nil, status: ClinicalStatus? = nil,
         reason: ResultUnavailableReason
     ) -> LabResult {
-        LabResult(id: index, name: name ?? "Result \(index + 1)", status: status,
+        LabResult(id: index, name: name, status: status,
                   value: .unavailable(reason), referenceRanges: [], interpretations: [])
     }
 
@@ -86,9 +86,9 @@ struct R4ReportMapper {
         if let display = nonempty(reference.display?.value?.string) { return display }
         if case .found(.organization(let organization), _) = resolver.resolve(reference.reference?.value?.string),
            organization.modifierExtension?.isEmpty != false, organization.implicitRules == nil {
-            return nonempty(organization.name?.value?.string) ?? "Performer unavailable"
+            return nonempty(organization.name?.value?.string)
         }
-        return "Performer unavailable"
+        return nil
     }
 
     private func effective(_ value: DiagnosticReport.EffectiveX?) -> ClinicalDate? {
@@ -151,23 +151,27 @@ struct R4ReportMapper {
             ?? codings.compactMap { nonempty($0.code?.value?.string) }.first
     }
 
-    private func interpretation(_ concept: CodeableConcept) -> String? {
-        if let text = nonempty(concept.text?.value?.string) { return text }
-        for coding in concept.coding ?? [] {
-            if let display = nonempty(coding.display?.value?.string) { return display }
-            if coding.system?.value?.url.absoluteString == "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation" {
-                switch coding.code?.value?.string {
-                case "H": return "High"
-                case "L": return "Low"
-                case "HH": return "Critical high"
-                case "LL": return "Critical low"
-                case "N": return "Normal"
-                case "A": return "Abnormal"
-                default: break
-                }
-            }
+    private func interpretation(_ concept: CodeableConcept) -> ResultInterpretation {
+        let codings = (concept.coding ?? []).map {
+            ResultInterpretation.Coding(
+                system: $0.system?.value?.url.absoluteString,
+                code: nonempty($0.code?.value?.string),
+                display: nonempty($0.display?.value?.string)
+            )
         }
-        return label(concept)
+        let kind = codings.compactMap { coding -> ResultInterpretation.Kind? in
+            guard coding.system == "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation" else { return nil }
+            switch coding.code {
+            case "H": return .high
+            case "L": return .low
+            case "HH": return .criticalHigh
+            case "LL": return .criticalLow
+            case "N": return .normal
+            case "A": return .abnormal
+            default: return nil
+            }
+        }.first ?? .unknown
+        return ResultInterpretation(kind: kind, text: nonempty(concept.text?.value?.string), codings: codings)
     }
 
     private func nonempty(_ value: String?) -> String? {

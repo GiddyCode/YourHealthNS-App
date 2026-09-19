@@ -1,24 +1,29 @@
 import SwiftUI
 
 struct ReportStatusView: View {
-    let content: ReportViewModel.Content
+    let state: ReportState
+    let formatter: ReportFormatting
     let retry: () async -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: HealthTheme.Space.regular) {
-            switch content {
-            case .idle, .loading:
+            switch state {
+            case .idle:
+                Label("Load your report", systemImage: "doc.text")
+                    .font(.headline)
+                retryButton
+            case .loading:
                 ReportLoadingView()
-            case .failed(let message):
+            case .failed(let failure):
                 Label("We couldn't load the report", systemImage: "wifi.exclamationmark")
                     .font(.headline)
-                Text(message)
+                Text(formatter.failure(failure))
                     .foregroundStyle(HealthTheme.secondaryText)
                 retryButton
-            case .loaded(.noReport):
+            case .loaded(.noReport, _):
                 ReportEmptyState()
                 retryButton
-            case .loaded(.report):
+            case .loaded(.report, _):
                 EmptyView()
             }
         }
@@ -27,10 +32,11 @@ struct ReportStatusView: View {
     }
 
     private var retryButton: some View {
-        Button("Try again") {
+        Button(state == .idle ? "Load report" : "Try again") {
             Task { await retry() }
         }
         .buttonStyle(HealthPrimaryButtonStyle())
+        .disabled(state.isRequestInFlight)
         .accessibilityIdentifier("report.retry")
     }
 }
