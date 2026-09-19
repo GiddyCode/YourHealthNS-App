@@ -11,14 +11,30 @@
 		B10000000000000000000003 /* FMCore in Frameworks */ = {isa = PBXBuildFile; productRef = B10000000000000000000004 /* FMCore */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B10000000000000000000011 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1000000000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000006;
+			remoteInfo = YourHealthNS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		A10000000000000000000001 /* YourHealthNS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourHealthNS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000005 /* YourHealthNSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = YourHealthNSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A10000000000000000000002 /* YourHealthNS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = YourHealthNS;
+			sourceTree = "<group>";
+		};
+		B10000000000000000000006 /* YourHealthNSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = YourHealthNSTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +47,11 @@
 				B10000000000000000000003 /* FMCore in Frameworks */,
 			);
 		};
+		B10000000000000000000007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -38,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000002 /* YourHealthNS */,
+				B10000000000000000000006 /* YourHealthNSTests */,
 				A10000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000001 /* YourHealthNS.app */,
+				B10000000000000000000005 /* YourHealthNSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +98,27 @@
 			productReference = A10000000000000000000001 /* YourHealthNS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B10000000000000000000009 /* YourHealthNSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1000000000000000000000A /* Build configuration list for PBXNativeTarget "YourHealthNSTests" */;
+			buildPhases = (
+				B1000000000000000000000B /* Sources */,
+				B10000000000000000000007 /* Frameworks */,
+				B1000000000000000000000C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1000000000000000000000D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000006 /* YourHealthNSTests */,
+			);
+			name = YourHealthNSTests;
+			productName = YourHealthNSTests;
+			productReference = B10000000000000000000005 /* YourHealthNSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -87,6 +131,10 @@
 				TargetAttributes = {
 					A10000000000000000000006 = {
 						CreatedOnToolsVersion = 27.0;
+					};
+					B10000000000000000000009 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = A10000000000000000000006;
 					};
 				};
 			};
@@ -108,12 +156,18 @@
 			projectRoot = "";
 			targets = (
 				A10000000000000000000006 /* YourHealthNS */,
+				B10000000000000000000009 /* YourHealthNSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A10000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		B1000000000000000000000C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -126,7 +180,20 @@
 			files = (
 			);
 		};
+		B1000000000000000000000B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1000000000000000000000D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000006 /* YourHealthNS */;
+			targetProxy = B10000000000000000000011 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A1000000000000000000000C /* Debug configuration for PBXProject "YourHealthNS" */ = {
@@ -310,6 +377,46 @@
 			};
 			name = Release;
 		};
+		B1000000000000000000000E /* Debug configuration for PBXNativeTarget "YourHealthNSTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.gideonogbonna.YourHealthNSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YourHealthNS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YourHealthNS";
+			};
+			name = Debug;
+		};
+		B1000000000000000000000F /* Release configuration for PBXNativeTarget "YourHealthNSTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.gideonogbonna.YourHealthNSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YourHealthNS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YourHealthNS";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -326,6 +433,14 @@
 			buildConfigurations = (
 				A1000000000000000000000C /* Debug configuration for PBXProject "YourHealthNS" */,
 				A1000000000000000000000D /* Release configuration for PBXProject "YourHealthNS" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		B1000000000000000000000A /* Build configuration list for PBXNativeTarget "YourHealthNSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1000000000000000000000E /* Debug configuration for PBXNativeTarget "YourHealthNSTests" */,
+				B1000000000000000000000F /* Release configuration for PBXNativeTarget "YourHealthNSTests" */,
 			);
 			defaultConfigurationName = Release;
 		};
